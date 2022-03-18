@@ -1,2 +1,2 @@
 # fs-entry-tool
-A tool for sorting 
+A tool for sorting future seeker applications.
