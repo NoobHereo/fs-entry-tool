@@ -29,6 +29,7 @@ public class Load : Screen
     public GameObject EntryPanel;
     public Scrollbar Scrollbar;
     public TMP_InputField PointsField;
+    public TMP_FontAsset RegularFont, CustomFont;
 
     public FutureSeekerData CurrentSeeker;
     private int currentSeekerId;
@@ -48,7 +49,6 @@ public class Load : Screen
         {
             string json = DataManager.Instance.LOADED_JSON.ToString();
             FutureSeekerData[] entryJSONS = JsonHelper.FromJson<FutureSeekerData>(json);
-            Debug.Log(entryJSONS.Length);
             if (entryJSONS == null || entryJSONS.Length <= 0)
             {
                 DisplayNoEntry();
@@ -67,14 +67,23 @@ public class Load : Screen
         NoEntries.gameObject.SetActive(false);
         ApproveButton.interactable = true;
         DenyButton.interactable = true;
-        LeftButton.interactable = false;
+
+        if (currentSeekerId == 0)
+            LeftButton.interactable = false;
+
         RightButton.interactable = true;
         Scrollbar.gameObject.SetActive(true);
         Title.gameObject.SetActive(true);
 
-        CurrentSeeker = FSEntries[0];
-        currentSeekerId = 0;
+        // currentSeekerId = 0;
+        CurrentSeeker = FSEntries[currentSeekerId];
         totalEntries = FSEntries.Count;
+
+        LeftButton.onClick.RemoveAllListeners();
+        RightButton.onClick.RemoveAllListeners();
+        ApproveButton.onClick.RemoveAllListeners();
+        DenyButton.onClick.RemoveAllListeners();
+
         LeftButton.onClick.AddListener(OnLeftClick);
         RightButton.onClick.AddListener(OnRightClick);
         ApproveButton.onClick.AddListener(OnApproveClick);
@@ -202,5 +211,45 @@ public class Load : Screen
         DataManager.Instance.AddSeeker(FSEntries[currentSeekerId], CandidateVoteType.Denied, points);
         DataManager.Instance.SaveCurrentData();
         OnRightClick();
+    }
+
+    public void SetFont(bool customFont)
+    {
+        TMP_FontAsset font = customFont ? CustomFont : RegularFont;
+        float size = customFont ? 44 : 40;
+        
+        ign.font = font;
+        ign.fontSizeMax = size;
+
+        why.font = font;
+        why.fontSizeMax = size;
+
+        what.font = font;
+        what.fontSizeMax = size;
+
+        your_message.font = font;
+        your_message.fontSizeMax = size;
+
+        programming_exp.font = font;
+        programming_exp.fontSizeMax = size;
+
+        art_fb.font = font;
+        art_fb.fontSizeMax = size;
+
+        public_fb.font = font;
+        public_fb.fontSizeMax = size;
+
+        shatters.font = font;
+        shatters.fontSizeMax = size;
+
+        stateff.font = font;
+        stateff.fontSizeMax = size;
+
+        design.font = font;
+        design.fontSizeMax = size;
+
+        agree.font = font;
+        agree.fontSizeMax = size;
+
     }
 }

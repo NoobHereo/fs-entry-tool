@@ -30,6 +30,9 @@ public class Candidates : Screen
 
     public void InitData()
     {
+        ApprovedButton.onClick.RemoveAllListeners();
+        DeniedButton.onClick.RemoveAllListeners();
+
         ApprovedButton.onClick.AddListener(OnApprovedClick);
         DeniedButton.onClick.AddListener(OnDeniedClick);
         DeniedButton.interactable = true;

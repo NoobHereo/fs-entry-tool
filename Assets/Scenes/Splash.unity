@@ -4355,6 +4355,8 @@ MonoBehaviour:
   EntryPanel: {fileID: 751105244}
   Scrollbar: {fileID: 669436100}
   PointsField: {fileID: 766255749}
+  RegularFont: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  CustomFont: {fileID: 11400000, guid: c6498fbb924c85b4c95dae6b106b9cab, type: 2}
   CurrentSeeker:
     IGN: 
     why: 
@@ -10199,6 +10201,7 @@ MonoBehaviour:
   ResetButton: {fileID: 736619990}
   ExportButton: {fileID: 1360906190}
   CustomFontsButton: {fileID: 760530914}
+  customFonts: 1
 --- !u!1 &1664213370
 GameObject:
   m_ObjectHideFlags: 0
@@ -11344,7 +11347,20 @@ MonoBehaviour:
     * Automatic saving and loading
     has been implemented
 
-    * Fixed the reset option'
+    * Fixed the reset option
+
+    * Buttons no longer stack
+    clicks when screen switching
+
+    * The tool now returns to the seeker you were
+    reviewing when returning to the entry review screen
+
+
+    Upcoming changes:
+
+    -
+    The entry review will have a checkbox to indicate if you are voting anonymously
+    or not. Until this is added all voting is anonymous.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c6498fbb924c85b4c95dae6b106b9cab, type: 2}
   m_sharedMaterial: {fileID: 7547075044009507167, guid: c6498fbb924c85b4c95dae6b106b9cab, type: 2}

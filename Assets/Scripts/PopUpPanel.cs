@@ -82,7 +82,6 @@ public class PopUpPanel : MonoBehaviour
                 
                 foreach (var approved in DataManager.Instance.ApprovedSeekers)
                 {
-                    Debug.Log("added: " + approved.Key.IGN + ", to the list");
                     CandidateData data = new CandidateData();
                     data.ign = approved.Key.IGN;
                     data.points = approved.Value;
@@ -91,23 +90,19 @@ public class PopUpPanel : MonoBehaviour
 
                 foreach (var denied in DataManager.Instance.DeniedSeekers)
                 {
-                    Debug.Log("added: " + denied.Key.IGN + ", to the list");
                     CandidateData data = new CandidateData();
                     data.ign = denied.Key.IGN;
                     data.points = denied.Value;
                     candidatesData.Add(data);
                 }
-                Debug.Log("Done, the total count for all the candidates are: " + candidatesData.Count);
 
                 string candidatesJson = JsonHelper.ToJson(candidatesData.ToArray(), true);
                 string deskPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
                 string path = deskPath + @"\fs_export.json";
 
-                Debug.Log("generated json: " + candidatesJson);
                 try
                 {
                     File.WriteAllText(path, candidatesJson);
-                    Debug.Log("File written");
                 }
                 catch (Exception ex)
                 {

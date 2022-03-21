@@ -30,9 +30,6 @@ public class DataManager : MonoBehaviour
             LOADED_JSON = data.LOADED_JSON;
             ApprovedSeekers = data.ApprovedSeekers;
             DeniedSeekers = data.DeniedSeekers;
-            Debug.Log(data.LOADED_JSON);
-            Debug.Log(data.ApprovedSeekers.Count);
-            Debug.Log(data.DeniedSeekers.Count);
         }
         else
         {
@@ -77,7 +74,6 @@ public class DataManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError("No savefile!");
             return null;
         }
     }
@@ -95,7 +91,6 @@ public class DataManager : MonoBehaviour
     public void SaveCurrentData()
     {
         AppData data = new AppData();
-        Debug.Log("trying to save: " + LOADED_JSON);
         data.LOADED_JSON = LOADED_JSON;
         data.ApprovedSeekers = ApprovedSeekers;
         data.DeniedSeekers = DeniedSeekers;

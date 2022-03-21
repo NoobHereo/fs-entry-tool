@@ -6,7 +6,7 @@ using System;
 public class Options : Screen
 {
     public Button ImportButton, ResetButton, ExportButton, CustomFontsButton;
-    private bool customFonts = true;
+    [SerializeField] private bool customFonts = true;
 
     public override void OnBackClick()
     {
@@ -16,6 +16,11 @@ public class Options : Screen
 
     public void Init()
     {
+        ImportButton.onClick.RemoveAllListeners();
+        ResetButton.onClick.RemoveAllListeners();
+        ExportButton.onClick.RemoveAllListeners();
+        CustomFontsButton.onClick.RemoveAllListeners();
+
         ImportButton.onClick.AddListener(OnImportClick);
         ResetButton.onClick.AddListener(OnResetClick);
         ExportButton.onClick.AddListener(OnExportClick);
@@ -42,6 +47,8 @@ public class Options : Screen
         customFonts = !customFonts;
         string text = customFonts ? "Custom font: On" : "Custom font: Off";
         CustomFontsButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = text;
+
+        UIHandler.Instance.UpdateFont(customFonts);
     }
 
 }
