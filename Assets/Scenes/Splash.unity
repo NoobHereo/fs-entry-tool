@@ -11358,9 +11358,9 @@ MonoBehaviour:
 
     Upcoming changes:
 
-    -
-    The entry review will have a checkbox to indicate if you are voting anonymously
-    or not. Until this is added all voting is anonymous.'
+    The
+    entry review will have a checkbox to indicate if you are voting anonymously or
+    not. Until this is added all voting is anonymous.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c6498fbb924c85b4c95dae6b106b9cab, type: 2}
   m_sharedMaterial: {fileID: 7547075044009507167, guid: c6498fbb924c85b4c95dae6b106b9cab, type: 2}
