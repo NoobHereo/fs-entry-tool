@@ -186,6 +186,7 @@ public class UIHandler : MonoBehaviour
 
     public void DispatchPopUp(string title, string description, bool inputField, bool dualButtons, OptionType type)
     {
+        Debug.Log("Dispatching pop up dialog");
         PopUpPanel.Dispatch(true);
         PopUpPanel.InitComponents(title, description, inputField, dualButtons, type);
     }

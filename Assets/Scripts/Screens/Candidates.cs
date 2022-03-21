@@ -1,11 +1,19 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 public enum CandidateVoteType
 {
     Approved,
     Denied
+}
+
+[Serializable]
+public class CandidateData
+{
+    public string ign;
+    public int points;
 }
 
 public class Candidates : Screen

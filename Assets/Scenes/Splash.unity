@@ -6626,7 +6626,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: BulletIn title
+  m_text: 'Version 0.2 Changes:'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c6498fbb924c85b4c95dae6b106b9cab, type: 2}
   m_sharedMaterial: {fileID: 7547075044009507167, guid: c6498fbb924c85b4c95dae6b106b9cab, type: 2}
@@ -11336,9 +11336,15 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: This is a bulletin description textfield that shows some random text that
-    is supposed to fill out this content field for the menu. Not really sure what
-    to put here yet.
+  m_text: '* Fixed a bug with data export that did not work
+
+    * The custom font
+    option has been fixed to make reviewing easier
+
+    * Automatic saving and loading
+    has been implemented
+
+    * Fixed the reset option'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c6498fbb924c85b4c95dae6b106b9cab, type: 2}
   m_sharedMaterial: {fileID: 7547075044009507167, guid: c6498fbb924c85b4c95dae6b106b9cab, type: 2}

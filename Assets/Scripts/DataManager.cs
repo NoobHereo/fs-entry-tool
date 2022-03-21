@@ -30,6 +30,13 @@ public class DataManager : MonoBehaviour
             LOADED_JSON = data.LOADED_JSON;
             ApprovedSeekers = data.ApprovedSeekers;
             DeniedSeekers = data.DeniedSeekers;
+            Debug.Log(data.LOADED_JSON);
+            Debug.Log(data.ApprovedSeekers.Count);
+            Debug.Log(data.DeniedSeekers.Count);
+        }
+        else
+        {
+            Debug.LogError("Data invalid");
         }
     }
 
@@ -88,8 +95,19 @@ public class DataManager : MonoBehaviour
     public void SaveCurrentData()
     {
         AppData data = new AppData();
+        Debug.Log("trying to save: " + LOADED_JSON);
         data.LOADED_JSON = LOADED_JSON;
         data.ApprovedSeekers = ApprovedSeekers;
         data.DeniedSeekers = DeniedSeekers;
+        SaveData(data);
+    }
+
+    public void ResetData()
+    {
+        AppData data = new AppData();
+        data.LOADED_JSON = "";
+        data.ApprovedSeekers = new Dictionary<FutureSeekerData, int>();
+        data.DeniedSeekers = new Dictionary<FutureSeekerData, int>();
+        SaveData(data);
     }
 }

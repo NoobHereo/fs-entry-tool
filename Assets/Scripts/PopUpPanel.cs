@@ -4,6 +4,7 @@ using TMPro;
 using System;
 using System.IO;
 using System.Text;
+using System.Collections.Generic;
 
 public enum OptionType
 {
@@ -70,6 +71,55 @@ public class PopUpPanel : MonoBehaviour
 
     private void OnOKClick()
     {
+        switch(CurrentType)
+        {
+            case OptionType.ResetData:
+                Application.Quit();
+                break;
+
+            case OptionType.ExportData:
+                List<CandidateData> candidatesData = new List<CandidateData>();
+                
+                foreach (var approved in DataManager.Instance.ApprovedSeekers)
+                {
+                    Debug.Log("added: " + approved.Key.IGN + ", to the list");
+                    CandidateData data = new CandidateData();
+                    data.ign = approved.Key.IGN;
+                    data.points = approved.Value;
+                    candidatesData.Add(data);
+                }
+
+                foreach (var denied in DataManager.Instance.DeniedSeekers)
+                {
+                    Debug.Log("added: " + denied.Key.IGN + ", to the list");
+                    CandidateData data = new CandidateData();
+                    data.ign = denied.Key.IGN;
+                    data.points = denied.Value;
+                    candidatesData.Add(data);
+                }
+                Debug.Log("Done, the total count for all the candidates are: " + candidatesData.Count);
+
+                string candidatesJson = JsonHelper.ToJson(candidatesData.ToArray(), true);
+                string deskPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+                string path = deskPath + @"\fs_export.json";
+
+                Debug.Log("generated json: " + candidatesJson);
+                try
+                {
+                    File.WriteAllText(path, candidatesJson);
+                    Debug.Log("File written");
+                }
+                catch (Exception ex)
+                {
+                    Dispatch(false);
+                    Debug.LogError("Something went wrong. Exception: " + ex);
+                    UIHandler.Instance.DispatchPopUp("Error on export", "Something wen't wrong trying to export your data. Try again", false, false, OptionType.ExportData);
+                    return;
+                }
+               
+                break;
+        }
+
         Dispatch(false);
     }
 
@@ -90,7 +140,7 @@ public class PopUpPanel : MonoBehaviour
                     using (var streamReader = new StreamReader(fileStream, Encoding.UTF8))
                     {
                         textContents = streamReader.ReadToEnd();
-                    }
+                    }                    
                 }
                 catch(FileNotFoundException ex)
                 {
@@ -102,10 +152,18 @@ public class PopUpPanel : MonoBehaviour
 
                 string json = temp.text + textContents + "}";
                 DataManager.Instance.LoadJSON(json);
+                DataManager.Instance.SaveCurrentData();
                 break;
 
             case OptionType.ResetData:
-                Debug.Log("reset");
+                DataManager.Instance.ResetData();
+                try
+                {
+                    Dispatch(false);
+                    UIHandler.Instance.DispatchPopUp("Restart required", "You have reset your tool's data. Please restart the tool in order for the reset to take effect", false, false, OptionType.ResetData);
+                    return;
+                } 
+                catch (Exception ex) { Debug.LogError(ex); }
                 break;
         }
 
