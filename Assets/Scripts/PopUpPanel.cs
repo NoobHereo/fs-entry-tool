@@ -10,7 +10,8 @@ public enum OptionType
 {
     ImportData,
     ResetData,
-    ExportData
+    ExportData,
+    ImportVotes
 }
 
 public class PopUpPanel : MonoBehaviour
@@ -43,6 +44,7 @@ public class PopUpPanel : MonoBehaviour
         OKButton.onClick.AddListener(OnOKClick);
         if (inputFIeld)
         {
+            DataField.text = "";
             DataField.gameObject.SetActive(true);
         }
         else
@@ -112,6 +114,10 @@ public class PopUpPanel : MonoBehaviour
                     return;
                 }
                
+                break;
+
+            case OptionType.ImportVotes:
+                Debug.Log("Yo lets go. Link: " + DataField.text);
                 break;
         }
 

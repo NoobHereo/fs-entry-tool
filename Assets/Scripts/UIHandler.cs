@@ -4,13 +4,14 @@ using UnityEngine.UI;
 public class UIHandler : MonoBehaviour
 {
     public static UIHandler Instance { get; private set; }
-    public Button LoadButton, CandidatesButton, OptionsButton, ExitButton;
+    public Button LoadButton, CandidatesButton, OptionsButton, SummaryButton, ExitButton;
     public Button MenuToggleButton;
 
     public Menu Menu;
     public Load Load;
     public Candidates Candidates;
     public Options Options;
+    public Summary Summary;
 
     public GameObject MenuBar;
     private bool menuCollapsed = true;
@@ -23,6 +24,7 @@ public class UIHandler : MonoBehaviour
         LoadButton.onClick.AddListener(OnLoadClick);
         CandidatesButton.onClick.AddListener(OnCandidatesClick);
         OptionsButton.onClick.AddListener(OnOptionsClick);
+        SummaryButton.onClick.AddListener(OnSummaryClick);
         ExitButton.onClick.AddListener(OnExitClick);
 
         MenuToggleButton.onClick.AddListener(ToggleMenuBar);
@@ -55,6 +57,15 @@ public class UIHandler : MonoBehaviour
     {
         AutoCollapse();
         ShowOptions();
+    }
+
+    /// <summary>
+    /// OnClick event for the summary button
+    /// </summary>
+    private void OnSummaryClick()
+    {
+        AutoCollapse();
+        ShowSummary();
     }
 
     /// <summary>
@@ -117,6 +128,20 @@ public class UIHandler : MonoBehaviour
         CurrentScreen = Options;
         Options.Dispatch(true);
         Options.Init();
+    }
+
+    /// <summary>
+    /// Dispatches the summary screen
+    /// </summary>
+    public void ShowSummary()
+    {
+        if (CurrentScreen == Menu)
+            Menu.Dispatch(false);
+
+        CurrentScreen.Dispatch(false);
+        CurrentScreen = Summary;
+        Summary.Dispatch(true);
+        Summary.Init();
     }
 
     private void ToggleMenuBar()
