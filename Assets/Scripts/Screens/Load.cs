@@ -25,11 +25,12 @@ public class Load : Screen
     public Dictionary<int, FutureSeekerData> FSEntries = new Dictionary<int, FutureSeekerData>();
     public TextMeshProUGUI ign, why, what, your_message, programming_exp, art_fb, public_fb, shatters, stateff, design, agree;
     public TextMeshProUGUI Title, NoEntries;
-    public Button LeftButton, RightButton, ApproveButton, DenyButton;
+    public Button LeftButton, RightButton, ApproveButton, SearchButton;
     public GameObject EntryPanel;
     public Scrollbar Scrollbar;
     public TMP_InputField PointsField;
     public TMP_FontAsset RegularFont, CustomFont;
+    public SearchPanel SearchPanel;
 
     public FutureSeekerData CurrentSeeker;
     private int currentSeekerId;
@@ -66,7 +67,6 @@ public class Load : Screen
         EntryPanel.SetActive(true);
         NoEntries.gameObject.SetActive(false);
         ApproveButton.interactable = true;
-        DenyButton.interactable = true;
 
         if (currentSeekerId == 0)
             LeftButton.interactable = false;
@@ -82,12 +82,12 @@ public class Load : Screen
         LeftButton.onClick.RemoveAllListeners();
         RightButton.onClick.RemoveAllListeners();
         ApproveButton.onClick.RemoveAllListeners();
-        DenyButton.onClick.RemoveAllListeners();
+        SearchButton.onClick.RemoveAllListeners();
 
         LeftButton.onClick.AddListener(OnLeftClick);
         RightButton.onClick.AddListener(OnRightClick);
         ApproveButton.onClick.AddListener(OnApproveClick);
-        DenyButton.onClick.AddListener(OnDenyClick);
+        SearchButton.onClick.AddListener(OnSearchClick);
         UpdateEntryContent();
     }
 
@@ -106,7 +106,7 @@ public class Load : Screen
             {
                 EntryPanel.gameObject.GetComponent<Outline>().effectColor = Color.green;
                 ApproveButton.interactable = false;
-                DenyButton.interactable = false;
+                // DenyButton.interactable = false;
                 approved = true;
                 break;
             }
@@ -117,7 +117,7 @@ public class Load : Screen
             {
                 EntryPanel.gameObject.GetComponent<Outline>().effectColor = Color.red;
                 ApproveButton.interactable = false;
-                DenyButton.interactable = false;
+                // DenyButton.interactable = false;
                 denied = true;
                 break;
             }
@@ -126,7 +126,7 @@ public class Load : Screen
         if (!approved && !denied)
         {
             ApproveButton.interactable = true;
-            DenyButton.interactable = true;
+            // DenyButton.interactable = true;
         }
 
         ign.text = CurrentSeeker.IGN;
@@ -174,7 +174,7 @@ public class Load : Screen
         EntryPanel.SetActive(false);
         NoEntries.gameObject.SetActive(true);
         ApproveButton.interactable = false;
-        DenyButton.interactable = false;
+        // DenyButton.interactable = false;
         LeftButton.interactable = false;
         RightButton.interactable = false;
         Scrollbar.gameObject.SetActive(false);
@@ -184,7 +184,7 @@ public class Load : Screen
     private void OnApproveClick()
     {
         ApproveButton.interactable = false;
-        DenyButton.interactable = false;
+        // DenyButton.interactable = false;
 
         int points;
         if (string.IsNullOrEmpty(PointsField.text))
@@ -197,20 +197,10 @@ public class Load : Screen
         OnRightClick();
     }
 
-    private void OnDenyClick()
+    private void OnSearchClick()
     {
-        ApproveButton.interactable = false;
-        DenyButton.interactable = false;
-
-        int points;
-        if (string.IsNullOrEmpty(PointsField.text))
-            points = 0;
-        else
-            points = int.Parse(PointsField.text);
-
-        DataManager.Instance.AddSeeker(FSEntries[currentSeekerId], CandidateVoteType.Denied, points);
-        DataManager.Instance.SaveCurrentData();
-        OnRightClick();
+        Debug.Log("Click");
+        SearchPanel.Dispatch(true);
     }
 
     public void SetFont(bool customFont)
