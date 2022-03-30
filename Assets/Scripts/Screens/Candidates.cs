@@ -106,7 +106,7 @@ public class Candidates : Screen
         {
             if (candidate.Key.IGN == CurrentBox.FSData.IGN)
             {
-
+                candidate.Key.Points = points;
             }
         }
         DataManager.Instance.SaveCurrentData();
