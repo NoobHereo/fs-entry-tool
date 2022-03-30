@@ -99,8 +99,11 @@ public class Load : Screen
         EntryPanel.gameObject.GetComponent<Outline>().effectColor = Color.black;
         bool approved = false;
         bool denied = false;
-        
-        foreach(var fs in DataManager.Instance.ApprovedSeekers)
+
+        if (currentSeekerId == 0)
+            LeftButton.interactable = false;
+
+        foreach (var fs in DataManager.Instance.ApprovedSeekers)
         {
             if (fs.Key.IGN == CurrentSeeker.IGN)
             {
@@ -199,7 +202,6 @@ public class Load : Screen
 
     private void OnSearchClick()
     {
-        Debug.Log("Click");
         SearchPanel.Dispatch(true);
     }
 
@@ -241,5 +243,17 @@ public class Load : Screen
         agree.font = font;
         agree.fontSizeMax = size;
 
+    }
+
+    public void JumpToEntry(string ign)
+    {
+        foreach(var fs in FSEntries)
+        {
+            if (fs.Value.IGN == ign)
+            {
+                currentSeekerId = fs.Key;
+                UpdateEntryContent();
+            }
+        }
     }
 }

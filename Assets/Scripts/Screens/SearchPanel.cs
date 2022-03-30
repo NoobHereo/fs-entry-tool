@@ -11,7 +11,6 @@ public class SearchPanel : MonoBehaviour
 
     public void Dispatch(bool visible)
     {
-        Debug.Log("Dispatch: " + visible);
         transform.GetChild(0).gameObject.SetActive(visible);
 
         if (visible)
@@ -21,7 +20,7 @@ public class SearchPanel : MonoBehaviour
         }
     }
 
-    private void OnCloseClick()
+    public void OnCloseClick()
     {
         for (int i = 0; i < SearchResultPanel.transform.childCount; i++)
             Destroy(SearchResultPanel.transform.GetChild(i).gameObject);
