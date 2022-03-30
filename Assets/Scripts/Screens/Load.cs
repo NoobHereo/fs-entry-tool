@@ -75,7 +75,6 @@ public class Load : Screen
         Scrollbar.gameObject.SetActive(true);
         Title.gameObject.SetActive(true);
 
-        // currentSeekerId = 0;
         CurrentSeeker = FSEntries[currentSeekerId];
         totalEntries = FSEntries.Count;
 
@@ -115,10 +114,8 @@ public class Load : Screen
         }        
 
         if (!approved && !denied)
-        {
             CandidateButton.interactable = true;
-            // DenyButton.interactable = true;
-        }
+        
 
         ign.text = CurrentSeeker.IGN;
         why.text = CurrentSeeker.why;
@@ -148,7 +145,6 @@ public class Load : Screen
 
     private void OnRightClick()
     {
-        Debug.Log("click");
         currentSeekerId++;
 
         if (currentSeekerId > 0)
@@ -165,7 +161,6 @@ public class Load : Screen
         EntryPanel.SetActive(false);
         NoEntries.gameObject.SetActive(true);
         CandidateButton.interactable = false;
-        // DenyButton.interactable = false;
         LeftButton.interactable = false;
         RightButton.interactable = false;
         Scrollbar.gameObject.SetActive(false);
@@ -175,7 +170,6 @@ public class Load : Screen
     private void OnCandidateClick()
     {
         CandidateButton.interactable = false;
-        // DenyButton.interactable = false;
 
         int points;
         if (string.IsNullOrEmpty(PointsField.text))
