@@ -20,6 +20,6 @@ public class Summary : Screen
 
     private void OnImportClick()
     {
-        UIHandler.Instance.DispatchPopUp("Import data", "Make sure everyone has submitted their votes and voting is done if the intend of this action is to calculate the final results.", true, true, OptionType.ImportVotes, "Sample text"); 
+        UIHandler.Instance.DispatchPopUp("Import data", "Make sure everyone has submitted their votes and voting is done if the intend of this action is to calculate the final results.", true, true, OptionType.ImportVotes, "TBM"); 
     }
 }

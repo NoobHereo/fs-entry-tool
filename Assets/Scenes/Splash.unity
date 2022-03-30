@@ -14070,9 +14070,6 @@ MonoBehaviour:
       m_Calls: []
   m_text: '* The entry evaluation page has been reworked:
 
-    - The tool still support
-    old load files and treats the old data as if it was new
-
     - The Deny button
     has been removed, entries can be marked candidates and be given points
 
