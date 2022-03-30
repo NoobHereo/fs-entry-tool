@@ -8,9 +8,16 @@ using System.Runtime.Serialization.Formatters.Binary;
 public class AppData
 {
     public string LOADED_JSON = null;
-    public Dictionary<FutureSeekerData, int> ApprovedSeekers = new Dictionary<FutureSeekerData, int>();
-    public Dictionary<FutureSeekerData, int> DeniedSeekers = new Dictionary<FutureSeekerData, int>();
+    public Dictionary<Candidate, int> Candidates = new Dictionary<Candidate, int>();
     public Dictionary<FutureSeekerData, int> AllSeekers = new Dictionary<FutureSeekerData, int>();
+}
+
+[Serializable]
+public class Candidate
+{
+    public string IGN;
+    public int Points;
+    public FutureSeekerData Data;
 }
 
 public class DataManager : MonoBehaviour
@@ -18,8 +25,7 @@ public class DataManager : MonoBehaviour
     public static DataManager Instance;
 
     public string LOADED_JSON = null;
-    public Dictionary<FutureSeekerData, int> ApprovedSeekers = new Dictionary<FutureSeekerData, int> ();
-    public Dictionary<FutureSeekerData, int> DeniedSeekers = new Dictionary<FutureSeekerData, int> ();
+    public Dictionary<Candidate, int> Candidates = new Dictionary<Candidate, int>();
     public Dictionary<FutureSeekerData, int> AllSeekers = new Dictionary<FutureSeekerData, int> ();
 
     public static string DataPath = "/toolData.txt";
@@ -29,9 +35,8 @@ public class DataManager : MonoBehaviour
         if (DataValid())
         {
             AppData data = LoadData();
+            Candidates = data.Candidates;
             LOADED_JSON = data.LOADED_JSON;
-            ApprovedSeekers = data.ApprovedSeekers;
-            DeniedSeekers = data.DeniedSeekers;
             AllSeekers = data.AllSeekers;
         }
         else
@@ -42,10 +47,11 @@ public class DataManager : MonoBehaviour
 
     public void AddSeeker(FutureSeekerData fs, CandidateVoteType vote, int points)
     {
-        if (fs != null && vote == CandidateVoteType.Approved)
-            ApprovedSeekers.Add(fs, points);
-        else if (fs != null && vote == CandidateVoteType.Denied)
-            DeniedSeekers.Add(fs, points);
+        Candidate candidate = new Candidate();
+        candidate.IGN = fs.IGN;
+        candidate.Points = points;
+        candidate.Data = fs;
+        Candidates.Add(candidate, Candidates.Count + 1);
     }
 
     public void LoadJSON(string json)
@@ -100,8 +106,7 @@ public class DataManager : MonoBehaviour
     {
         AppData data = new AppData();
         data.LOADED_JSON = LOADED_JSON;
-        data.ApprovedSeekers = ApprovedSeekers;
-        data.DeniedSeekers = DeniedSeekers;
+        data.Candidates = Candidates;
         data.AllSeekers = AllSeekers;
         SaveData(data);
     }
@@ -110,8 +115,7 @@ public class DataManager : MonoBehaviour
     {
         AppData data = new AppData();
         data.LOADED_JSON = "";
-        data.ApprovedSeekers = new Dictionary<FutureSeekerData, int>();
-        data.DeniedSeekers = new Dictionary<FutureSeekerData, int>();
+        data.Candidates = new Dictionary<Candidate, int>();
         data.AllSeekers = new Dictionary<FutureSeekerData, int>();
         SaveData(data);
     }

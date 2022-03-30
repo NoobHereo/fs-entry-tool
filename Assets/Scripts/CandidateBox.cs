@@ -22,6 +22,12 @@ public class CandidateBox : MonoBehaviour
 
     private void OnClick()
     {
-        // TODO: Implement something here.
+        UIHandler.Instance.Candidates.SelectCandidateBox(this);
+    }
+
+    public void UpdatePoints(int points)
+    {
+        Points = points;        
+        Name.text = FSData.IGN + "(" + points + ")";
     }
 }

@@ -25,7 +25,7 @@ public class Load : Screen
     public Dictionary<int, FutureSeekerData> FSEntries = new Dictionary<int, FutureSeekerData>();
     public TextMeshProUGUI ign, why, what, your_message, programming_exp, art_fb, public_fb, shatters, stateff, design, agree;
     public TextMeshProUGUI Title, NoEntries;
-    public Button LeftButton, RightButton, ApproveButton, SearchButton;
+    public Button LeftButton, RightButton, CandidateButton, SearchButton;
     public GameObject EntryPanel;
     public Scrollbar Scrollbar;
     public TMP_InputField PointsField;
@@ -66,7 +66,7 @@ public class Load : Screen
 
         EntryPanel.SetActive(true);
         NoEntries.gameObject.SetActive(false);
-        ApproveButton.interactable = true;
+        CandidateButton.interactable = true;
 
         if (currentSeekerId == 0)
             LeftButton.interactable = false;
@@ -81,12 +81,12 @@ public class Load : Screen
 
         LeftButton.onClick.RemoveAllListeners();
         RightButton.onClick.RemoveAllListeners();
-        ApproveButton.onClick.RemoveAllListeners();
+        CandidateButton.onClick.RemoveAllListeners();
         SearchButton.onClick.RemoveAllListeners();
 
         LeftButton.onClick.AddListener(OnLeftClick);
         RightButton.onClick.AddListener(OnRightClick);
-        ApproveButton.onClick.AddListener(OnApproveClick);
+        CandidateButton.onClick.AddListener(OnCandidateClick);
         SearchButton.onClick.AddListener(OnSearchClick);
         UpdateEntryContent();
     }
@@ -103,32 +103,20 @@ public class Load : Screen
         if (currentSeekerId == 0)
             LeftButton.interactable = false;
 
-        foreach (var fs in DataManager.Instance.ApprovedSeekers)
+        foreach (var candidate in DataManager.Instance.Candidates)
         {
-            if (fs.Key.IGN == CurrentSeeker.IGN)
+            if (candidate.Key.IGN == CurrentSeeker.IGN)
             {
                 EntryPanel.gameObject.GetComponent<Outline>().effectColor = Color.green;
-                ApproveButton.interactable = false;
-                // DenyButton.interactable = false;
+                CandidateButton.interactable = false;
                 approved = true;
                 break;
             }
-        }
-        foreach(var fs in DataManager.Instance.DeniedSeekers)
-        {
-            if (fs.Key.IGN == CurrentSeeker.IGN)
-            {
-                EntryPanel.gameObject.GetComponent<Outline>().effectColor = Color.red;
-                ApproveButton.interactable = false;
-                // DenyButton.interactable = false;
-                denied = true;
-                break;
-            }
-        }
+        }        
 
         if (!approved && !denied)
         {
-            ApproveButton.interactable = true;
+            CandidateButton.interactable = true;
             // DenyButton.interactable = true;
         }
 
@@ -176,7 +164,7 @@ public class Load : Screen
     {
         EntryPanel.SetActive(false);
         NoEntries.gameObject.SetActive(true);
-        ApproveButton.interactable = false;
+        CandidateButton.interactable = false;
         // DenyButton.interactable = false;
         LeftButton.interactable = false;
         RightButton.interactable = false;
@@ -184,9 +172,9 @@ public class Load : Screen
         Title.gameObject.SetActive(false);
     }
 
-    private void OnApproveClick()
+    private void OnCandidateClick()
     {
-        ApproveButton.interactable = false;
+        CandidateButton.interactable = false;
         // DenyButton.interactable = false;
 
         int points;

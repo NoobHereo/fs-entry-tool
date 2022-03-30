@@ -29,17 +29,17 @@ public class Options : Screen
 
     private void OnImportClick()
     {
-        UIHandler.Instance.DispatchPopUp("Import data", "Make sure the JSON file is on your desktop. Type the name of the file in the field below. Example: 'future_seekers'. Do not include .JSON. NOTE: This will override any current data."/*"Copy the JSON data as regular text and paste it in the datafield here. Press the import button to import the data to the tool. NOTE: This will override any current data"*/, true, true, OptionType.ImportData);
+        UIHandler.Instance.DispatchPopUp("Import data", "Make sure the JSON file is on your desktop. Type the name of the file in the field below. Example: 'future_seekers'. Do not include .JSON. NOTE: This will override any current data."/*"Copy the JSON data as regular text and paste it in the datafield here. Press the import button to import the data to the tool. NOTE: This will override any current data"*/, true, true, OptionType.ImportData, "Enter JSON file name...");
     }
 
     private void OnResetClick()
     {
-        UIHandler.Instance.DispatchPopUp("Reset data", "This will reset your data and all your work will be permanently gone. If you want to make a backup press cancel and export your data before performing this action", false, true, OptionType.ResetData);
+        UIHandler.Instance.DispatchPopUp("Reset data", "This will reset your data and all your work will be permanently gone. If you want to make a backup press cancel and export your data before performing this action", false, true, OptionType.ResetData, "");
     }
 
     private void OnExportClick()
     {
-        UIHandler.Instance.DispatchPopUp("Export data", "Data has been succesfully exported to your desktop", false, false, OptionType.ExportData);
+        UIHandler.Instance.DispatchPopUp("Export data", "Data has been succesfully exported to your desktop", false, false, OptionType.ExportData, "");
     }
 
     private void OnCustomFontsClick()

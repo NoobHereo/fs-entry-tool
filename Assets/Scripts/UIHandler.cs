@@ -209,10 +209,10 @@ public class UIHandler : MonoBehaviour
         }
     }
 
-    public void DispatchPopUp(string title, string description, bool inputField, bool dualButtons, OptionType type)
+    public void DispatchPopUp(string title, string description, bool inputField, bool dualButtons, OptionType type, string inputFieldText)
     {
         PopUpPanel.Dispatch(true);
-        PopUpPanel.InitComponents(title, description, inputField, dualButtons, type);
+        PopUpPanel.InitComponents(title, description, inputField, dualButtons, type, inputFieldText);
     }
 
     public void UpdateFont(bool customFont)

@@ -11,7 +11,8 @@ public enum OptionType
     ImportData,
     ResetData,
     ExportData,
-    ImportVotes
+    ImportVotes,
+    CandEdit
 }
 
 public class PopUpPanel : MonoBehaviour
@@ -34,7 +35,7 @@ public class PopUpPanel : MonoBehaviour
         }
     }
 
-    public void InitComponents(string title, string description, bool inputFIeld, bool dualButtons, OptionType type)
+    public void InitComponents(string title, string description, bool inputFIeld, bool dualButtons, OptionType type, string inputText)
     {
         Title.text = title;
         Description.text = description;
@@ -45,6 +46,7 @@ public class PopUpPanel : MonoBehaviour
         if (inputFIeld)
         {
             DataField.text = "";
+            DataField.transform.GetChild(0).Find("Placeholder").GetComponent<TextMeshProUGUI>().text = inputText;
             DataField.gameObject.SetActive(true);
         }
         else
@@ -82,22 +84,14 @@ public class PopUpPanel : MonoBehaviour
             case OptionType.ExportData:
                 List<CandidateData> candidatesData = new List<CandidateData>();
                 
-                foreach (var approved in DataManager.Instance.ApprovedSeekers)
+                foreach (var candidate in DataManager.Instance.Candidates)
                 {
                     CandidateData data = new CandidateData();
-                    data.ign = approved.Key.IGN;
-                    data.points = approved.Value;
+                    data.ign = candidate.Key.IGN;
+                    data.points = candidate.Value;
                     candidatesData.Add(data);
                 }
-
-                foreach (var denied in DataManager.Instance.DeniedSeekers)
-                {
-                    CandidateData data = new CandidateData();
-                    data.ign = denied.Key.IGN;
-                    data.points = denied.Value;
-                    candidatesData.Add(data);
-                }
-
+              
                 string candidatesJson = JsonHelper.ToJson(candidatesData.ToArray(), true);
                 string deskPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
                 string path = deskPath + @"\fs_export.json";
@@ -110,7 +104,7 @@ public class PopUpPanel : MonoBehaviour
                 {
                     Dispatch(false);
                     Debug.LogError("Something went wrong. Exception: " + ex);
-                    UIHandler.Instance.DispatchPopUp("Error on export", "Something wen't wrong trying to export your data. Try again", false, false, OptionType.ExportData);
+                    UIHandler.Instance.DispatchPopUp("Error on export", "Something wen't wrong trying to export your data. Try again", false, false, OptionType.ExportData, "");
                     return;
                 }
                
@@ -146,7 +140,7 @@ public class PopUpPanel : MonoBehaviour
                 catch(FileNotFoundException ex)
                 {
                     Dispatch(false);
-                    UIHandler.Instance.DispatchPopUp("Error: File not found", "You tried to import a file but the file was not found. Please try again", false, false, OptionType.ImportData);
+                    UIHandler.Instance.DispatchPopUp("Error: File not found", "You tried to import a file but the file was not found. Please try again", false, false, OptionType.ImportData, "");
                     Debug.LogError("file is null. Exception: " + ex);
                     return;
                 }                
@@ -161,10 +155,17 @@ public class PopUpPanel : MonoBehaviour
                 try
                 {
                     Dispatch(false);
-                    UIHandler.Instance.DispatchPopUp("Restart required", "You have reset your tool's data. Please restart the tool in order for the reset to take effect", false, false, OptionType.ResetData);
+                    UIHandler.Instance.DispatchPopUp("Restart required", "You have reset your tool's data. Please restart the tool in order for the reset to take effect", false, false, OptionType.ResetData, "");
                     return;
                 } 
                 catch (Exception ex) { Debug.LogError(ex); }
+                break;
+
+            case OptionType.CandEdit:
+                if (string.IsNullOrEmpty(DataField.text))
+                    return;
+
+                UIHandler.Instance.Candidates.UpdateCurrentCandidate(int.Parse(DataField.text));
                 break;
         }
 
