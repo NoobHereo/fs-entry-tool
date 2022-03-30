@@ -37,13 +37,20 @@ public class SearchPanel : MonoBehaviour
         Debug.Log("input length: " + chars.Length);
         foreach(var fs in DataManager.Instance.AllSeekers)
         {
-            if (fs.Key.IGN.Length >= chars.Length && fs.Key.IGN.Substring(0, chars.Length) == chars && !string.IsNullOrEmpty(chars) && !addedIgns.Contains(fs.Key.IGN))
+            if (fs.Key.IGN.Length >= chars.Length && fs.Key.IGN.Substring(0, chars.Length) == chars && !string.IsNullOrEmpty(chars))
             {
-                Debug.Log("yoink: " + fs.Key.IGN);
-                GameObject loadedEntryBox = Instantiate(Resources.Load<GameObject>("Prefabs/LoadedEntry"), SearchResultPanel.transform);
-                loadedEntryBox.GetComponent<LoadedEntryBox>().InitBox(fs.Key, fs.Value);
-                boxes.Add(loadedEntryBox.GetComponent<LoadedEntryBox>());
-                addedIgns.Add(fs.Key.IGN);
+                if (!addedIgns.Contains(fs.Key.IGN))
+                {
+                    Debug.Log("yoink: " + fs.Key.IGN);
+                    GameObject loadedEntryBox = Instantiate(Resources.Load<GameObject>("Prefabs/LoadedEntry"), SearchResultPanel.transform);
+                    loadedEntryBox.GetComponent<LoadedEntryBox>().InitBox(fs.Key, fs.Value);
+                    boxes.Add(loadedEntryBox.GetComponent<LoadedEntryBox>());
+                    addedIgns.Add(fs.Key.IGN);
+                }
+                else
+                {
+                    return;
+                }
             }
             else
             {
