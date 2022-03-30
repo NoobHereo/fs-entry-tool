@@ -1,9 +1,17 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
+public enum ScreenThemes
+{
+    Basic,
+    Exalt
+}
+
+
 public class UIHandler : MonoBehaviour
 {
     public static UIHandler Instance { get; private set; }
+    public ScreenThemes AppTheme = ScreenThemes.Basic;
     public Button LoadButton, CandidatesButton, OptionsButton, SummaryButton, ExitButton;
     public Button MenuToggleButton;
 
@@ -13,7 +21,7 @@ public class UIHandler : MonoBehaviour
     public Options Options;
     public Summary Summary;
 
-    public GameObject MenuBar;
+    public GameObject MenuBar, TitleBar;
     private bool menuCollapsed = true;
     public Screen CurrentScreen;
     public PopUpPanel PopUpPanel;
@@ -27,6 +35,13 @@ public class UIHandler : MonoBehaviour
         SummaryButton.onClick.AddListener(OnSummaryClick);
         ExitButton.onClick.AddListener(OnExitClick);
 
+        Image titleFill = TitleBar.GetComponent<Image>();
+        if (AppTheme == ScreenThemes.Basic)
+            titleFill.color = new Color32(58, 58, 58, 255);
+        else if (AppTheme == ScreenThemes.Exalt)
+            titleFill.color = new Color32(0, 0, 0, 130);
+
+        Menu.SetTheme(true);
         MenuToggleButton.onClick.AddListener(ToggleMenuBar);
         CurrentScreen = Menu;
         ToggleMenuBar();
@@ -85,6 +100,7 @@ public class UIHandler : MonoBehaviour
         CurrentScreen.Dispatch(false);
         CurrentScreen = Menu;
         Menu.Dispatch(true);
+        Menu.SetTheme(true);
     }
 
     /// <summary>
@@ -100,6 +116,7 @@ public class UIHandler : MonoBehaviour
         CurrentScreen = Load;
         Load.Dispatch(true);
         Load.InitData();
+        Load.SetTheme();
     }
 
     /// <summary>
@@ -114,6 +131,7 @@ public class UIHandler : MonoBehaviour
         CurrentScreen = Candidates;
         Candidates.Dispatch(true);
         Candidates.InitData();
+        Candidates.SetTheme();
     }
 
     /// <summary>
@@ -128,6 +146,7 @@ public class UIHandler : MonoBehaviour
         CurrentScreen = Options;
         Options.Dispatch(true);
         Options.Init();
+        Options.SetTheme();
     }
 
     /// <summary>
@@ -142,6 +161,7 @@ public class UIHandler : MonoBehaviour
         CurrentScreen = Summary;
         Summary.Dispatch(true);
         Summary.Init();
+        Summary.SetTheme();
     }
 
     private void ToggleMenuBar()
@@ -151,6 +171,15 @@ public class UIHandler : MonoBehaviour
             ExpandMenu();
         else
             CollapseMenu();
+
+        Image backfill = MenuBar.GetComponent<Image>();
+        Color32 basic = new Color32(48, 48, 48, 255);
+        Color32 exalt = new Color32(0, 0, 0, 175);
+
+        if (AppTheme == ScreenThemes.Basic)
+            backfill.color = basic;
+        else if (AppTheme == ScreenThemes.Exalt)
+            backfill.color = exalt;
     }
 
     /// <summary>
@@ -218,5 +247,25 @@ public class UIHandler : MonoBehaviour
     public void UpdateFont(bool customFont)
     {
         Load.SetFont(customFont);
+    }
+
+    public void UpdateAppTheme()
+    {
+        Image titleFill = TitleBar.GetComponent<Image>();
+        Image menuFill = MenuBar.GetComponent<Image>();
+       
+        if (AppTheme == ScreenThemes.Basic)
+        {
+            titleFill.color = new Color32(58, 58, 58, 255);
+            menuFill.color = new Color32(48, 48, 48, 255);
+        }
+        else if (AppTheme == ScreenThemes.Exalt)
+        {
+            titleFill.color = new Color32(0, 0, 0, 130);
+            menuFill.color = new Color32(0, 0, 0, 175);
+        }
+
+        bool isMenu = CurrentScreen == Menu ? true : false;
+        CurrentScreen.SetTheme(isMenu);
     }
 }

@@ -1,7 +1,4 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class Menu : Screen
-{    
-
-}
+public class Menu : Screen { }

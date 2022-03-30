@@ -5,7 +5,7 @@ using System;
 
 public class Options : Screen
 {
-    public Button ImportButton, ResetButton, ExportButton, CustomFontsButton;
+    public Button ImportButton, ResetButton, ExportButton, CustomFontsButton, ThemeButton;
     [SerializeField] private bool customFonts = true;
 
     public override void OnBackClick()
@@ -20,11 +20,13 @@ public class Options : Screen
         ResetButton.onClick.RemoveAllListeners();
         ExportButton.onClick.RemoveAllListeners();
         CustomFontsButton.onClick.RemoveAllListeners();
+        ThemeButton.onClick.RemoveAllListeners();
 
         ImportButton.onClick.AddListener(OnImportClick);
         ResetButton.onClick.AddListener(OnResetClick);
         ExportButton.onClick.AddListener(OnExportClick);
         CustomFontsButton.onClick.AddListener(OnCustomFontsClick);
+        ThemeButton.onClick.AddListener(OnThemeClick);
     }
 
     private void OnImportClick()
@@ -49,6 +51,14 @@ public class Options : Screen
         CustomFontsButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = text;
 
         UIHandler.Instance.UpdateFont(customFonts);
+    }
+
+    private void OnThemeClick()
+    {
+        ScreenThemes theme = UIHandler.Instance.AppTheme == ScreenThemes.Basic ? ScreenThemes.Exalt : ScreenThemes.Basic;
+        ThemeButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Theme: " + theme.ToString();
+        UIHandler.Instance.AppTheme = theme;
+        UIHandler.Instance.UpdateAppTheme();
     }
 
 }

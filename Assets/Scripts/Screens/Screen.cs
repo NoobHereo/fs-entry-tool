@@ -25,4 +25,16 @@ public class Screen : MonoBehaviour
     {
         transform.GetChild(0).gameObject.SetActive(visible);
     }
+
+    public void SetTheme(bool isMenu = false)
+    {
+        Image backfill = transform.GetChild(0).GetComponent<Image>();
+        int alpha = isMenu ? 0 : 85;
+
+        if (UIHandler.Instance.AppTheme == ScreenThemes.Basic)
+            backfill.color = new Color32(65, 65, 65, 255);
+
+        else if (UIHandler.Instance.AppTheme == ScreenThemes.Exalt)
+            backfill.color = new Color32(0, 0, 0, (byte)alpha);
+    }
 }
