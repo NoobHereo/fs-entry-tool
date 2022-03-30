@@ -34,14 +34,12 @@ public class SearchPanel : MonoBehaviour
     public void OnInputFieldChanged()
     {
         string chars = SearchField.text;
-        Debug.Log("input length: " + chars.Length);
         foreach(var fs in DataManager.Instance.AllSeekers)
         {
             if (fs.Key.IGN.Length >= chars.Length && fs.Key.IGN.Substring(0, chars.Length) == chars && !string.IsNullOrEmpty(chars))
             {
                 if (!addedIgns.Contains(fs.Key.IGN))
                 {
-                    Debug.Log("yoink: " + fs.Key.IGN);
                     GameObject loadedEntryBox = Instantiate(Resources.Load<GameObject>("Prefabs/LoadedEntry"), SearchResultPanel.transform);
                     loadedEntryBox.GetComponent<LoadedEntryBox>().InitBox(fs.Key, fs.Value);
                     boxes.Add(loadedEntryBox.GetComponent<LoadedEntryBox>());
@@ -54,7 +52,6 @@ public class SearchPanel : MonoBehaviour
             }
             else
             {
-                // Debug.Log("ehh what");
                 for (int i = 0; i < SearchResultPanel.transform.childCount; i++)
                 {
                     if (!SearchResultPanel.transform.GetChild(i).GetComponent<LoadedEntryBox>().BoxText.text.Contains(chars))
