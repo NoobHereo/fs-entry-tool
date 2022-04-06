@@ -3,6 +3,7 @@ using UnityEngine;
 using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Collections;
 
 [Serializable]
 public class AppData
@@ -56,12 +57,28 @@ public class DataManager : MonoBehaviour
 
     public void LoadJSON(string json)
     {
-        LOADED_JSON = json;
-        FutureSeekerData[] fsJsons = JsonHelper.FromJson<FutureSeekerData>(json);
-        for (int i = 0; i < fsJsons.Length; i++)
-        {
-            AllSeekers.Add(fsJsons[i], i);
+        try 
+        { 
+            FutureSeekerData[] fsJsons = JsonHelper.FromJson<FutureSeekerData>(json);
+            for (int i = 0; i < fsJsons.Length; i++)
+            {
+                AllSeekers.Add(fsJsons[i], i);
+            }
+
+            Debug.Log("setting JSON");
+            LOADED_JSON = json;
         }
+        catch 
+        {
+            StartCoroutine(LoadError());
+            return;
+        }
+    }
+
+    private IEnumerator LoadError()
+    {
+        yield return new WaitForSeconds(0.25f);
+        UIHandler.Instance.DispatchPopUp("Something went wrong..", "The file you tried to import could not be loaded. Are you sure you are importing the right file? The export file cannot be loaded as it only holds anonymous data about entries and their respective votes.", false, false, OptionType.Misc, "");
     }
 
     public void SaveData(AppData data)

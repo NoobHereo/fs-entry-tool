@@ -177,6 +177,14 @@ public class Load : Screen
         else
             points = int.Parse(PointsField.text);
 
+        if (points < 0 || points > 8)
+        {
+            UIHandler.Instance.DispatchPopUp("Invalid points", "You entered an invalid amount of points. You can give a min. score of 0 and maximum score of 8. Leave it blank to delegate 0 points.", false, false, OptionType.Misc, "");
+            CandidateButton.interactable = true;
+            return;
+        }
+
+
         DataManager.Instance.AddSeeker(FSEntries[currentSeekerId], CandidateVoteType.Approved, points);
         DataManager.Instance.SaveCurrentData();
         OnRightClick();

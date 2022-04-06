@@ -12,7 +12,8 @@ public enum OptionType
     ResetData,
     ExportData,
     ImportVotes,
-    CandEdit
+    CandEdit,
+    Misc
 }
 
 public class PopUpPanel : MonoBehaviour
@@ -88,7 +89,7 @@ public class PopUpPanel : MonoBehaviour
                 {
                     CandidateData data = new CandidateData();
                     data.ign = candidate.Key.IGN;
-                    data.points = candidate.Value;
+                    data.points = candidate.Key.Points;
                     candidatesData.Add(data);
                 }
               
@@ -143,7 +144,7 @@ public class PopUpPanel : MonoBehaviour
                     UIHandler.Instance.DispatchPopUp("Error: File not found", "You tried to import a file but the file was not found. Please try again", false, false, OptionType.ImportData, "");
                     Debug.LogError("file is null. Exception: " + ex);
                     return;
-                }                
+                }
 
                 string json = temp.text + textContents + "}";
                 DataManager.Instance.LoadJSON(json);

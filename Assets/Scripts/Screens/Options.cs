@@ -31,7 +31,7 @@ public class Options : Screen
 
     private void OnImportClick()
     {
-        UIHandler.Instance.DispatchPopUp("Import data", "Make sure the JSON file is on your desktop. Type the name of the file in the field below. Example: 'future_seekers'. Do not include .JSON. NOTE: This will override any current data."/*"Copy the JSON data as regular text and paste it in the datafield here. Press the import button to import the data to the tool. NOTE: This will override any current data"*/, true, true, OptionType.ImportData, "Enter JSON file name...");
+        UIHandler.Instance.DispatchPopUp("Import data", "Make sure the JSON file is on your desktop. Type the name of the file in the field below. Example: 'future_seekers'. Do not include .JSON. NOTE: This will override and reset any current data."/*"Copy the JSON data as regular text and paste it in the datafield here. Press the import button to import the data to the tool. NOTE: This will override any current data"*/, true, true, OptionType.ImportData, "Enter JSON file name...");
     }
 
     private void OnResetClick()
