@@ -42,6 +42,10 @@ public class Candidates : Screen
             }            
         }
 
+        EditButton.interactable = false;
+        UndoButton.interactable = false;
+        CompareButton.interactable = false;
+
         EditButton.onClick.RemoveAllListeners();
         UndoButton.onClick.RemoveAllListeners();
         CompareButton.onClick.RemoveAllListeners();
@@ -85,7 +89,19 @@ public class Candidates : Screen
 
     private void OnUndoClick()
     {
-        // TODO: Implement something here
+        foreach(var candidate in DataManager.Instance.Candidates)
+        {
+            if (CurrentBox.FSData.IGN == candidate.Key.IGN)
+            {
+                Candidate removedCand = candidate.Key;
+                DataManager.Instance.Candidates.Remove(removedCand);
+                Destroy(CurrentBox.gameObject);
+                CurrentBox = null;
+                DataManager.Instance.SaveCurrentData();
+                return;
+            }
+        }
+        // TODO: Implement something here / Does this work?
     }
 
     private void OnCompareClick()
