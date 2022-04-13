@@ -3,12 +3,6 @@ using UnityEngine.UI;
 using TMPro;
 using System;
 
-public enum CandidateVoteType
-{
-    Approved,
-    Denied
-}
-
 [Serializable]
 public class CandidateData
 {

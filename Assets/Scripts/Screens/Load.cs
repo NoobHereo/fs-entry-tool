@@ -193,7 +193,7 @@ public class Load : Screen
         }
 
 
-        DataManager.Instance.AddSeeker(FSEntries[currentSeekerId], CandidateVoteType.Approved, points);
+        DataManager.Instance.AddSeeker(FSEntries[currentSeekerId], points);
         DataManager.Instance.SaveCurrentData();
         OnRightClick();
     }

@@ -48,7 +48,7 @@ public class DataManager : MonoBehaviour
         }
     }
 
-    public void AddSeeker(FutureSeekerData fs, CandidateVoteType vote, int points)
+    public void AddSeeker(FutureSeekerData fs, int points)
     {
         Candidate candidate = new Candidate();
         candidate.IGN = fs.IGN;
