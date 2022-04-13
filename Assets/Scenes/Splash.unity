@@ -15811,8 +15811,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: "* The tool now saves your theme\n* Entries and applications are now more
     readable\n* Added entry text inspect that displays a selected answer on a popup
-    isolated from the other answers\n\n\n\nNote: The summary page is intended to
-    be left undone as of now. \n(You wont be needing this right now anyway)"
+    isolated from the other answers\n* Selected candidates can now be undone by pressing
+    the \"undo\" button on the Candidates page\n\n\n\nNote: The summary page is intended
+    to be left undone as of now. \n(You wont be needing this right now anyway)"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c6498fbb924c85b4c95dae6b106b9cab, type: 2}
   m_sharedMaterial: {fileID: 7547075044009507167, guid: c6498fbb924c85b4c95dae6b106b9cab, type: 2}

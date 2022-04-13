@@ -84,7 +84,6 @@ public class Candidates : Screen
     private void OnEditClick()
     {
         UIHandler.Instance.DispatchPopUp("Edit candidate", "Edit the candiate points you initially delegated to this IGN's entry.", true, true, OptionType.CandEdit, "Enter new points...");
-        // TODO: Implement something here
     }
 
     private void OnUndoClick()
@@ -101,7 +100,6 @@ public class Candidates : Screen
                 return;
             }
         }
-        // TODO: Implement something here / Does this work?
     }
 
     private void OnCompareClick()
