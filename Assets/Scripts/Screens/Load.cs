@@ -25,16 +25,18 @@ public class Load : Screen
     public Dictionary<int, FutureSeekerData> FSEntries = new Dictionary<int, FutureSeekerData>();
     public TextMeshProUGUI ign, why, what, your_message, programming_exp, art_fb, public_fb, shatters, stateff, design, agree;
     public TextMeshProUGUI Title, NoEntries;
-    public Button LeftButton, RightButton, CandidateButton, SearchButton;
+    public Button LeftButton, RightButton, CandidateButton, SearchButton, AnswerInspectButton;
     public GameObject EntryPanel;
     public Scrollbar Scrollbar;
     public TMP_InputField PointsField;
     public TMP_FontAsset RegularFont, CustomFont;
     public SearchPanel SearchPanel;
+    public InspectPanel InspectPanel;
 
     public FutureSeekerData CurrentSeeker;
     private int currentSeekerId;
     private int totalEntries;
+    private string inspectText = string.Empty;
 
     public override void OnBackClick()
     {
@@ -67,6 +69,7 @@ public class Load : Screen
         EntryPanel.SetActive(true);
         NoEntries.gameObject.SetActive(false);
         CandidateButton.interactable = true;
+        AnswerInspectButton.gameObject.SetActive(false);
 
         if (currentSeekerId == 0)
             LeftButton.interactable = false;
@@ -82,11 +85,13 @@ public class Load : Screen
         RightButton.onClick.RemoveAllListeners();
         CandidateButton.onClick.RemoveAllListeners();
         SearchButton.onClick.RemoveAllListeners();
+        AnswerInspectButton.onClick.RemoveAllListeners();
 
         LeftButton.onClick.AddListener(OnLeftClick);
         RightButton.onClick.AddListener(OnRightClick);
         CandidateButton.onClick.AddListener(OnCandidateClick);
         SearchButton.onClick.AddListener(OnSearchClick);
+        AnswerInspectButton.onClick.AddListener(OnInspectClick);
         UpdateEntryContent();
     }
 
@@ -140,6 +145,7 @@ public class Load : Screen
         if (currentSeekerId == (totalEntries - 2))
             RightButton.interactable = true;
 
+        SetAnswerInspectButton(false, string.Empty);
         UpdateEntryContent();
     }
 
@@ -153,6 +159,7 @@ public class Load : Screen
         if (currentSeekerId == (totalEntries - 1))
             RightButton.interactable = false;
 
+        SetAnswerInspectButton(false, string.Empty);
         UpdateEntryContent();
     }
 
@@ -169,6 +176,7 @@ public class Load : Screen
 
     private void OnCandidateClick()
     {
+        SetAnswerInspectButton(false, string.Empty);
         CandidateButton.interactable = false;
 
         int points;
@@ -245,5 +253,16 @@ public class Load : Screen
                 UpdateEntryContent();
             }
         }
+    }
+
+    public void SetAnswerInspectButton(bool visible, string answer)
+    {
+        AnswerInspectButton.gameObject.SetActive(visible);
+        inspectText = answer;
+    }
+
+    public void OnInspectClick()
+    {
+        InspectPanel.Dispatch(true, inspectText);
     }
 }

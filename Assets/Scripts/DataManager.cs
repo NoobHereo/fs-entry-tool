@@ -11,6 +11,7 @@ public class AppData
     public string LOADED_JSON = null;
     public Dictionary<Candidate, int> Candidates = new Dictionary<Candidate, int>();
     public Dictionary<FutureSeekerData, int> AllSeekers = new Dictionary<FutureSeekerData, int>();
+    public ScreenThemes AppTheme = ScreenThemes.Basic;
 }
 
 [Serializable]
@@ -28,6 +29,7 @@ public class DataManager : MonoBehaviour
     public string LOADED_JSON = null;
     public Dictionary<Candidate, int> Candidates = new Dictionary<Candidate, int>();
     public Dictionary<FutureSeekerData, int> AllSeekers = new Dictionary<FutureSeekerData, int> ();
+    public ScreenThemes AppTheme = ScreenThemes.Basic;
 
     public static string DataPath = "/toolData.txt";
     private void Start()
@@ -125,6 +127,7 @@ public class DataManager : MonoBehaviour
         data.LOADED_JSON = LOADED_JSON;
         data.Candidates = Candidates;
         data.AllSeekers = AllSeekers;
+        data.AppTheme = AppTheme;
         SaveData(data);
     }
 

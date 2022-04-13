@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using System;
 
+[Serializable]
 public enum ScreenThemes
 {
     Basic,
@@ -34,6 +36,9 @@ public class UIHandler : MonoBehaviour
         OptionsButton.onClick.AddListener(OnOptionsClick);
         SummaryButton.onClick.AddListener(OnSummaryClick);
         ExitButton.onClick.AddListener(OnExitClick);
+
+        AppData data = DataManager.Instance.LoadData();
+        AppTheme = data.AppTheme;
 
         Image titleFill = TitleBar.GetComponent<Image>();
         if (AppTheme == ScreenThemes.Basic)

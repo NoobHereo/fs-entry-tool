@@ -8,6 +8,12 @@ public class Options : Screen
     public Button ImportButton, ResetButton, ExportButton, CustomFontsButton, ThemeButton;
     [SerializeField] private bool customFonts = true;
 
+    public override void Start()
+    {
+        base.Start();
+        ThemeButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Theme: " + UIHandler.Instance.AppTheme.ToString();
+    }
+
     public override void OnBackClick()
     {
         UIHandler.Instance.ShowMenu();
@@ -59,6 +65,8 @@ public class Options : Screen
         ThemeButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Theme: " + theme.ToString();
         UIHandler.Instance.AppTheme = theme;
         UIHandler.Instance.UpdateAppTheme();
+        DataManager.Instance.AppTheme = UIHandler.Instance.AppTheme;
+        DataManager.Instance.SaveCurrentData();
     }
 
 }
