@@ -37,8 +37,11 @@ public class UIHandler : MonoBehaviour
         SummaryButton.onClick.AddListener(OnSummaryClick);
         ExitButton.onClick.AddListener(OnExitClick);
 
-        AppData data = DataManager.Instance.LoadData();
-        AppTheme = data.AppTheme;
+        if (DataManager.Instance.DataValid())
+        {
+            AppData data = DataManager.Instance.LoadData();
+            AppTheme = data.AppTheme;
+        }
 
         Image titleFill = TitleBar.GetComponent<Image>();
         if (AppTheme == ScreenThemes.Basic)
