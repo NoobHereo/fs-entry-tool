@@ -131,7 +131,7 @@ public class Load : Screen
         public_fb.text = CurrentSeeker.public_feedback;
         shatters.text = CurrentSeeker.shatters;
         stateff.text = CurrentSeeker.statuseffect;
-        design.text = CurrentSeeker.shatters;
+        design.text = CurrentSeeker.gooddesign;
         agree.text = CurrentSeeker.agree;
     }
 
