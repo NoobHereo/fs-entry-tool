@@ -73,7 +73,9 @@ public class Candidates : Screen
         CurrentBox = box;
         boxSelected = true;
 
-        PreviousBox.gameObject.GetComponent<Outline>().effectColor = Color.black;
+        if (PreviousBox != null)
+            PreviousBox.gameObject.GetComponent<Outline>().effectColor = Color.black;
+
         CurrentBox.gameObject.GetComponent<Outline>().effectColor = Color.green;
 
         EditButton.interactable = boxSelected;
