@@ -5,6 +5,8 @@ using System;
 using System.IO;
 using System.Text;
 using System.Collections.Generic;
+using UnityEngine.Networking;
+using System.Collections;
 
 public enum OptionType
 {
@@ -14,6 +16,12 @@ public enum OptionType
     ImportVotes,
     CandEdit,
     Misc
+}
+
+public struct GData
+{
+    public string ign;
+    public int points;
 }
 
 public class PopUpPanel : MonoBehaviour
@@ -110,10 +118,6 @@ public class PopUpPanel : MonoBehaviour
                 }
                
                 break;
-
-            case OptionType.ImportVotes:
-                Debug.Log("Yo lets go. Link: " + DataField.text);
-                break;
         }
 
         Dispatch(false);
@@ -168,9 +172,41 @@ public class PopUpPanel : MonoBehaviour
 
                 UIHandler.Instance.Candidates.UpdateCurrentCandidate(int.Parse(DataField.text));
                 break;
+
+            case OptionType.ImportVotes:
+                ProcessLink(DataField.text);
+                break;
         }
 
         Dispatch(false);
     }
 
+    private void ProcessLink(string url)
+    {
+        Debug.Log("base url: " + url);
+        string fileId = url.Substring(39, 33);
+        string baseUrl = "https://drive.google.com/uc?export=download&id=";
+
+        Debug.Log(baseUrl + fileId);
+        StartCoroutine(GetData(baseUrl + fileId));
+    }
+
+    private IEnumerator GetData(string url)
+    {
+        UnityWebRequest request = UnityWebRequest.Get(url);
+        yield return request.SendWebRequest();
+
+        if (request.result == UnityWebRequest.Result.ConnectionError)
+        {
+            Debug.LogError("something went wrong...");
+        }
+        else
+        {
+            Debug.Log("Downloaded: " + request.downloadHandler.text);
+            GData data = JsonUtility.FromJson<GData>(request.downloadHandler.text);
+            Debug.Log("data: " + data.ToString());
+        }
+
+        request.Dispose();
+    }
 }
