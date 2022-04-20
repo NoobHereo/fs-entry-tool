@@ -174,39 +174,68 @@ public class PopUpPanel : MonoBehaviour
                 break;
 
             case OptionType.ImportVotes:
-                ProcessLink(DataField.text);
+                ProcessFolder(DataField.text);
                 break;
         }
 
         Dispatch(false);
     }
 
-    private void ProcessLink(string url)
+    private void ProcessFolder(string folderName)
     {
-        Debug.Log("base url: " + url);
-        string fileId = url.Substring(39, 33);
-        string baseUrl = "https://drive.google.com/uc?export=download&id=";
+        string deskPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+        string path = deskPath + @"\" + folderName;
 
-        Debug.Log(baseUrl + fileId);
-        StartCoroutine(GetData(baseUrl + fileId));
-    }
+        var info = new DirectoryInfo(path);
+        var fileInfo = info.GetFiles();
 
-    private IEnumerator GetData(string url)
-    {
-        UnityWebRequest request = UnityWebRequest.Get(url);
-        yield return request.SendWebRequest();
-
-        if (request.result == UnityWebRequest.Result.ConnectionError)
+        if (fileInfo.Length == 0)
         {
-            Debug.LogError("something went wrong...");
-        }
-        else
-        {
-            Debug.Log("Downloaded: " + request.downloadHandler.text);
-            GData data = JsonUtility.FromJson<GData>(request.downloadHandler.text);
-            Debug.Log("data: " + data.ToString());
+            Debug.Log("the folder is empty");
+            return;
         }
 
-        request.Dispose();
+        foreach (var file in fileInfo)
+            UIHandler.Instance.Summary.AnalyzeResultFile(path + @"\" + file.Name, file.Name);
+
+        UIHandler.Instance.Summary.GetFinalScores();
     }
+
+    #region Deprecated code
+    /////// READ ME ///////
+
+    // This part has been commented out as it's yet to be done using the Google Drive API instead of Unity's Web Request package.
+    // I'm not a big fan of regions either, but I would rather not look at this big box of green. Thank you for understanding :)
+
+    ///////////////////////
+
+    //private void ProcessLink(string url)
+    //{
+    //    Debug.Log("base url: " + url);
+    //    string fileId = url.Substring(39, 33);
+    //    string baseUrl = "https://drive.google.com/uc?export=download&id=";
+
+    //    Debug.Log(baseUrl + fileId);
+    //    StartCoroutine(GetData(baseUrl + fileId));
+    //}
+
+    //private IEnumerator GetData(string url)
+    //{
+    //    UnityWebRequest request = UnityWebRequest.Get(url);
+    //    yield return request.SendWebRequest();
+
+    //    if (request.result == UnityWebRequest.Result.ConnectionError)
+    //    {
+    //        Debug.LogError("something went wrong...");
+    //    }
+    //    else
+    //    {
+    //        Debug.Log("Downloaded: " + request.downloadHandler.text);
+    //        GData data = JsonUtility.FromJson<GData>(request.downloadHandler.text);
+    //        Debug.Log("data: " + data.ToString());
+    //    }
+
+    //    request.Dispose();
+    //}
+    #endregion
 }
